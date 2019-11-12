@@ -33,7 +33,7 @@ namespace AttributeFinder
                     if (attr.AttributeType.FullName == "BepInEx.BepInIncompatibility")
                     {
                         JsonArray array = (JsonArray)jsonDict.Add("Incompatibilities", new JsonArray());
-                        array.Add(DependencyJson(attr.ConstructorArguments));
+                        array.Add(attr.ConstructorArguments[0].Value.ToString());
                     }
                 }
             }
