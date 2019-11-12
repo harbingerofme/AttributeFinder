@@ -8,7 +8,7 @@ Usage `AttributeFinder.exe {pathToAssembly}`
 ---
 
 Output is of the form:
-```json
+```xml
 {
 	PluginInfo: {"GUID" : "<PLUGINGUID>", "Name" : "<PLUGINNAME>", "Version": "<PLUGINVERSION>"}
 	Dependencies: [ {"Name" : "<MODGUID1>", "Type" : <"hard"|"soft">},{"Name" : "<MODGUID2>", "Type" : <"hard"|"soft">}]
