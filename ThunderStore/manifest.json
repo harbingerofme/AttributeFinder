@@ -1,0 +1,8 @@
+﻿{
+  "name": "AttributeFinder",
+  "version_number": "1.1.0",
+  "website_url": "https://github.com/harbingerofme/AttributeFinder",
+  "description": "NOT A MOD: Utility tool to discover bepinex attributes of other mods.",
+  "dependencies": [
+  ]
+}
