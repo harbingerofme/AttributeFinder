@@ -1,8 +1,9 @@
 ﻿using Mono.Cecil;
-using BepInEx;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Reflection;
 
 namespace AttributeFinder
 {
@@ -14,7 +15,8 @@ namespace AttributeFinder
             {
                 return 1;
             }
-            AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(args[0]);
+            ReaderParameters readParams = AssertBepinexReference();
+            AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(args[0],readParams);
             ModuleDefinition a = assembly.MainModule;
             var jsonDict = new JsonObject();
             foreach(TypeDefinition typ in a.Types)
@@ -39,6 +41,24 @@ namespace AttributeFinder
             }
             Console.WriteLine(jsonDict);
             return 0;
+        }
+
+        static ReaderParameters AssertBepinexReference()
+        {
+            string tempPath = Path.Combine(Path.GetTempPath(), "AttributeFinder");
+            Directory.CreateDirectory(tempPath);
+            string tempBepPath = Path.Combine(tempPath, "Bepinex.dll");
+            if (!File.Exists(tempBepPath))
+            {
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("AttributeFinder.BepInEx.dll");
+                FileStream fileStream = new FileStream(tempBepPath, FileMode.CreateNew);
+                for (int i = 0; i < stream.Length; i++)
+                    fileStream.WriteByte((byte)stream.ReadByte());
+                fileStream.Close();
+            }
+            var resolver = new DefaultAssemblyResolver();
+            resolver.AddSearchDirectory(tempPath);
+            return new ReaderParameters{AssemblyResolver = resolver};
         }
 
         static JsonObject PluginJson(Mono.Collections.Generic.Collection<CustomAttributeArgument> arguments)
