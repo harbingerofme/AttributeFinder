@@ -79,6 +79,8 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="README.md" />
+    <None Include="ThunderStore\manifest.json" />
+    <None Include="ThunderStore\README.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BepInEx.dll" />
